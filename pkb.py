@@ -174,8 +174,12 @@ def is_valid(param):
 
 def get_collectors(collector_name_str, neptune_client):
 
+    st.error('HEY')
+
     collector_names = split_and_clean_names(collector_name_str)
     for collector_name in collector_names:
+
+        st.error(collector_name)
 
         if not is_valid(collector_name):
             continue
@@ -502,6 +506,11 @@ def main():
 
     if uploaded_file is not None:  
         process_image(uploaded_file, neptune_client)  
+
+    collector_name = 'Steven R. Hill'
+    get_collectors(collector_name, neptune_client)
+
+    
 
     # data = {
     #     'collectorname':'Steven R. Hill',

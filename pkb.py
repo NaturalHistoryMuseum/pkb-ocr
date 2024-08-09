@@ -195,9 +195,15 @@ def get_collectors(collector_name_str, neptune_client):
 
         if df.empty: continue
 
+        result_df = pd.DataFrame()   
         for index, row in df.iterrows():
             key = row['label']
-            st.error(key)
+            query = f"g.V().has('collector', '{key}', TextP.containing('{collector_name}')).valueMap(true)"
+            temp_df = wr.neptune.execute_gremlin(neptune_client, query)
+            result_df = pd.concat([result_df, temp_df], ignore_index=True)
+            result_df = result_df.drop_duplicates(subset='collectorindex')
+
+            st.dataframe(result_df)
 
     return df
 

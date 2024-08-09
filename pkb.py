@@ -502,6 +502,9 @@ def main():
     
     neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
     
+    st.text("Connecting to Neptune......")
+    st.text(neptune_client.status())
+
     # Upload image
     uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])
 

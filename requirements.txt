@@ -21,3 +21,4 @@ taxon_parser
 awswrangler[gremlin, opencypher, sparql]
 fuzzywuzzy==0.18.0
 pygbif==0.6.4
+python-dotenv==0.21.0

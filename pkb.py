@@ -28,6 +28,15 @@ import uuid
 import time
 from pygbif import species
 from fuzzywuzzy import process
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+NEPTUNE_URL = os.getenv('NEPTUNE_URL')
+# Continue running even if neptune is missing
+CONTINUE_NO_NEPTUNE = os.getenv('CONTINUE_NO_NEPTUNE', 1)
 
 DATA_DIR = Path('./data')
 
@@ -39,7 +48,7 @@ taxa_df = pd.read_csv(INPUT_DIR / 'taxa.csv')
 institutions_df = pd.read_csv(INPUT_DIR / 'institutions.csv')
 
 
-url = "tf-20240207121511848700000014.cluster-c9ezntcdvm4p.eu-west-2.neptune.amazonaws.com"  # The Neptune Cluster endpoint
+# url = NEPTUNE_URL  # The Neptune Cluster endpoint
 iam_enabled = True  # Set to True/False based on the configuration of your cluster
 neptune_port = 8182  # Set to the Neptune Cluster Port, Default is 8182
 region_name = "eu-west-2"  # Replace with your Neptune cluster's region
@@ -48,12 +57,8 @@ endpoint='collecto-2024-07-19-07-17-490000-endpoint'
 # Create a session with the specified region
 session = boto3.Session(region_name=region_name)
 
-OPEN_AI_API_KEY = os.environ.get('OPEN_AI_API_KEY')
-OpenAI.api_key = OPEN_AI_API_KEY
+OpenAI.api_key = OPENAI_API_KEY
 gpt_client = OpenAI(api_key=OpenAI.api_key) #Best practice needs OPENAI_API_KEY environment variable
-
-# Raise an exception of Neptune is missing
-CONTINUE_NO_NEPTUNE = False
 
 # Set the page layout to wide mode
 st.set_page_config(layout="wide")
@@ -481,7 +486,7 @@ def main():
     session = boto3.Session(region_name=region_name)
 
     try:
-        response = requests.get(f'https://{url}/status', timeout=1)
+        response = requests.get(f'https://{NEPTUNE_URL}/status', timeout=1)
         response.raise_for_status()
     except Exception as e:
         if CONTINUE_NO_NEPTUNE:
@@ -490,7 +495,7 @@ def main():
             st.error("Sorry, the graph neural network is unavailable. Please try again later.")
             return
     else:
-        neptune_client = wr.neptune.connect(url, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
+        neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
     
     # Upload image
     uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])

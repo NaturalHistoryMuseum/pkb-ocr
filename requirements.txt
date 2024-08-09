@@ -1,0 +1,23 @@
+streamlit>=1.28
+langchain>=0.0.217
+openai>=1.35
+duckduckgo-search
+anthropic>=0.3.0
+trubrics>=1.4.3
+streamlit-feedback
+pytesseract
+pillow
+langchain-community
+langchain_openai
+gremlinpython>=3.5.2
+aiohttp>=3.8.3
+pyvis
+async-timeout
+boto3
+pandas
+matplotlib
+networkx
+taxon_parser
+awswrangler[gremlin, opencypher, sparql]
+fuzzywuzzy==0.18.0
+pygbif==0.6.4

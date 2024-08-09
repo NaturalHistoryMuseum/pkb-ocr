@@ -1,0 +1,253 @@
+,ISO,ISO3,Country,fips,Continent,geonameid
+0,AD,AND,Andorra,AN,EU,
+1,AE,ARE,United Arab Emirates,AE,AS,290557.0
+2,AF,AFG,Afghanistan,AF,AS,1149361.0
+3,AG,ATG,Antigua and Barbuda,AC,,3576396.0
+4,AI,AIA,Anguilla,AV,,3573511.0
+5,AL,ALB,Albania,AL,EU,
+6,AM,ARM,Armenia,AM,AS,
+7,AO,AGO,Angola,AO,AF,3351879.0
+8,AQ,ATA,Antarctica,AY,AN,6697173.0
+9,AR,ARG,Argentina,AR,SA,
+10,AS,ASM,American Samoa,AQ,OC,
+11,AT,AUT,Austria,AU,EU,
+12,AU,AUS,Australia,AS,OC,
+13,AW,ABW,Aruba,AA,,3577279.0
+14,AX,ALA,Aland Islands,,EU,
+15,AZ,AZE,Azerbaijan,AJ,AS,
+16,BA,BIH,Bosnia and Herzegovina,BK,EU,
+17,BB,BRB,Barbados,BB,,
+18,BD,BGD,Bangladesh,BG,AS,
+19,BE,BEL,Belgium,BE,EU,
+20,BF,BFA,Burkina Faso,UV,AF,2361809.0
+21,BG,BGR,Bulgaria,BU,EU,
+22,BH,BHR,Bahrain,BA,AS,
+23,BI,BDI,Burundi,BY,AF,433561.0
+24,BJ,BEN,Benin,BN,AF,2395170.0
+25,BL,BLM,Saint Barthelemy,TB,,
+26,BM,BMU,Bermuda,BD,,
+27,BN,BRN,Brunei,BX,AS,
+28,BO,BOL,Bolivia,BL,SA,3923057.0
+29,BQ,BES,"Bonaire, Saint Eustatius and Saba ",,,7626844.0
+30,BR,BRA,Brazil,BR,SA,
+31,BS,BHS,Bahamas,BF,,3572887.0
+32,BT,BTN,Bhutan,BT,AS,1252634.0
+33,BV,BVT,Bouvet Island,BV,AN,3371123.0
+34,BW,BWA,Botswana,BC,AF,933860.0
+35,BY,BLR,Belarus,BO,EU,
+36,BZ,BLZ,Belize,BH,,3582678.0
+37,CA,CAN,Canada,CA,,
+38,CC,CCK,Cocos Islands,CK,AS,1547376.0
+39,CD,COD,Democratic Republic of the Congo,CG,AF,203312.0
+40,CF,CAF,Central African Republic,CT,AF,239880.0
+41,CG,COG,Republic of the Congo,CF,AF,2260494.0
+42,CH,CHE,Switzerland,SZ,EU,
+43,CI,CIV,Ivory Coast,IV,AF,2287781.0
+44,CK,COK,Cook Islands,CW,OC,1899402.0
+45,CL,CHL,Chile,CI,SA,
+46,CM,CMR,Cameroon,CM,AF,2233387.0
+47,CN,CHN,China,CH,AS,
+48,CO,COL,Colombia,CO,SA,
+49,CR,CRI,Costa Rica,CS,,
+50,CU,CUB,Cuba,CU,,
+51,CV,CPV,Cabo Verde,CV,AF,
+52,CW,CUW,Curacao,UC,,7626836.0
+53,CX,CXR,Christmas Island,KT,OC,
+54,CY,CYP,Cyprus,CY,EU,
+55,CZ,CZE,Czechia,EZ,EU,
+56,DE,DEU,Germany,GM,EU,
+57,DJ,DJI,Djibouti,DJ,AF,223816.0
+58,DK,DNK,Denmark,DA,EU,
+59,DM,DMA,Dominica,DO,,3575830.0
+60,DO,DOM,Dominican Republic,DR,,
+61,DZ,DZA,Algeria,AG,AF,
+62,EC,ECU,Ecuador,EC,SA,
+63,EE,EST,Estonia,EN,EU,
+64,EG,EGY,Egypt,EG,AF,
+65,EH,ESH,Western Sahara,WI,AF,2461445.0
+66,ER,ERI,Eritrea,ER,AF,338010.0
+67,ES,ESP,Spain,SP,EU,
+68,ET,ETH,Ethiopia,ET,AF,
+69,FI,FIN,Finland,FI,EU,
+70,FJ,FJI,Fiji,FJ,OC,2205218.0
+71,FK,FLK,Falkland Islands,FK,SA,3474414.0
+72,FM,FSM,Micronesia,FM,OC,
+73,FO,FRO,Faroe Islands,FO,EU,
+74,FR,FRA,France,FR,EU,
+75,GA,GAB,Gabon,GB,AF,2400553.0
+76,GB,GBR,United Kingdom,UK,EU,
+77,GD,GRD,Grenada,GJ,,3580239.0
+78,GE,GEO,Georgia,GG,AS,
+79,GF,GUF,French Guiana,FG,SA,
+80,GG,GGY,Guernsey,GK,EU,
+81,GH,GHA,Ghana,GH,AF,2300660.0
+82,GI,GIB,Gibraltar,GI,EU,2411586.0
+83,GL,GRL,Greenland,GL,,
+84,GM,GMB,Gambia,GA,AF,2413451.0
+85,GN,GIN,Guinea,GV,AF,2420477.0
+86,GP,GLP,Guadeloupe,GP,,
+87,GQ,GNQ,Equatorial Guinea,EK,AF,2309096.0
+88,GR,GRC,Greece,GR,EU,
+89,GS,SGS,South Georgia and the South Sandwich Islands,SX,AN,3474415.0
+90,GT,GTM,Guatemala,GT,,
+91,GU,GUM,Guam,GQ,OC,
+92,GW,GNB,Guinea-Bissau,PU,AF,
+93,GY,GUY,Guyana,GY,SA,3378535.0
+94,HK,HKG,Hong Kong,HK,AS,1819730.0
+95,HM,HMD,Heard Island and McDonald Islands,HM,AN,1547314.0
+96,HN,HND,Honduras,HO,,
+97,HR,HRV,Croatia,HR,EU,
+98,HT,HTI,Haiti,HA,,
+99,HU,HUN,Hungary,HU,EU,
+100,ID,IDN,Indonesia,ID,AS,
+101,IE,IRL,Ireland,EI,EU,2963597.0
+102,IL,ISR,Israel,IS,AS,
+103,IM,IMN,Isle of Man,IM,EU,
+104,IN,IND,India,IN,AS,
+105,IO,IOT,British Indian Ocean Territory,IO,AS,1282588.0
+106,IQ,IRQ,Iraq,IZ,AS,
+107,IR,IRN,Iran,IR,AS,
+108,IS,ISL,Iceland,IC,EU,
+109,IT,ITA,Italy,IT,EU,
+110,JE,JEY,Jersey,JE,EU,
+111,JM,JAM,Jamaica,JM,,3489940.0
+112,JO,JOR,Jordan,JO,AS,
+113,JP,JPN,Japan,JA,AS,
+114,KE,KEN,Kenya,KE,AF,
+115,KG,KGZ,Kyrgyzstan,KG,AS,
+116,KH,KHM,Cambodia,CB,AS,
+117,KI,KIR,Kiribati,KR,OC,4030945.0
+118,KM,COM,Comoros,CN,AF,921929.0
+119,KN,KNA,Saint Kitts and Nevis,SC,,3575174.0
+120,KP,PRK,North Korea,KN,AS,
+121,KR,KOR,South Korea,KS,AS,
+122,XK,XKX,Kosovo,KV,EU,831053.0
+123,KW,KWT,Kuwait,KU,AS,
+124,KY,CYM,Cayman Islands,CJ,,3580718.0
+125,KZ,KAZ,Kazakhstan,KZ,AS,
+126,LA,LAO,Laos,LA,AS,
+127,LB,LBN,Lebanon,LE,AS,
+128,LC,LCA,Saint Lucia,ST,,3576468.0
+129,LI,LIE,Liechtenstein,LS,EU,
+130,LK,LKA,Sri Lanka,CE,AS,
+131,LR,LBR,Liberia,LI,AF,
+132,LS,LSO,Lesotho,LT,AF,
+133,LT,LTU,Lithuania,LH,EU,
+134,LU,LUX,Luxembourg,LU,EU,
+135,LV,LVA,Latvia,LG,EU,
+136,LY,LBY,Libya,LY,AF,2215636.0
+137,MA,MAR,Morocco,MO,AF,
+138,MC,MCO,Monaco,MN,EU,
+139,MD,MDA,Moldova,MD,EU,
+140,ME,MNE,Montenegro,MJ,EU,
+141,MF,MAF,Saint Martin,RN,,
+142,MG,MDG,Madagascar,MA,AF,
+143,MH,MHL,Marshall Islands,RM,OC,
+144,MK,MKD,North Macedonia,MK,EU,
+145,ML,MLI,Mali,ML,AF,2453866.0
+146,MM,MMR,Myanmar,BM,AS,
+147,MN,MNG,Mongolia,MG,AS,
+148,MO,MAC,Macao,MC,AS,1821275.0
+149,MP,MNP,Northern Mariana Islands,CQ,OC,
+150,MQ,MTQ,Martinique,MB,,
+151,MR,MRT,Mauritania,MR,AF,2378080.0
+152,MS,MSR,Montserrat,MH,,3578097.0
+153,MT,MLT,Malta,MT,EU,
+154,MU,MUS,Mauritius,MP,AF,934292.0
+155,MV,MDV,Maldives,MV,AS,
+156,MW,MWI,Malawi,MI,AF,
+157,MX,MEX,Mexico,MX,,
+158,MY,MYS,Malaysia,MY,AS,
+159,MZ,MOZ,Mozambique,MZ,AF,
+160,,NAM,Namibia,WA,AF,3355338.0
+161,NC,NCL,New Caledonia,NC,OC,
+162,NE,NER,Niger,NG,AF,
+163,NF,NFK,Norfolk Island,NF,OC,
+164,NG,NGA,Nigeria,NI,AF,
+165,NI,NIC,Nicaragua,NU,,
+166,NL,NLD,The Netherlands,NL,EU,
+167,NO,NOR,Norway,NO,EU,
+168,NP,NPL,Nepal,NP,AS,
+169,NR,NRU,Nauru,NR,OC,2110425.0
+170,NU,NIU,Niue,NE,OC,4036232.0
+171,NZ,NZL,New Zealand,NZ,OC,
+172,OM,OMN,Oman,MU,AS,
+173,PA,PAN,Panama,PM,,
+174,PE,PER,Peru,PE,SA,
+175,PF,PYF,French Polynesia,FP,OC,
+176,PG,PNG,Papua New Guinea,PP,OC,
+177,PH,PHL,Philippines,RP,AS,
+178,PK,PAK,Pakistan,PK,AS,
+179,PL,POL,Poland,PL,EU,
+180,PM,SPM,Saint Pierre and Miquelon,SB,,
+181,PN,PCN,Pitcairn,PC,OC,4030699.0
+182,PR,PRI,Puerto Rico,RQ,,
+183,PS,PSE,Palestinian Territory,WE,AS,6254930.0
+184,PT,PRT,Portugal,PO,EU,
+185,PW,PLW,Palau,PS,OC,1559582.0
+186,PY,PRY,Paraguay,PA,SA,
+187,QA,QAT,Qatar,QA,AS,289688.0
+188,RE,REU,Reunion,RE,AF,
+189,RO,ROU,Romania,RO,EU,
+190,RS,SRB,Serbia,RI,EU,
+191,RU,RUS,Russia,RS,EU,
+192,RW,RWA,Rwanda,RW,AF,49518.0
+193,SA,SAU,Saudi Arabia,SA,AS,
+194,SB,SLB,Solomon Islands,BP,OC,2103350.0
+195,SC,SYC,Seychelles,SE,AF,241170.0
+196,SD,SDN,Sudan,SU,AF,
+197,SS,SSD,South Sudan,OD,AF,7909807.0
+198,SE,SWE,Sweden,SW,EU,
+199,SG,SGP,Singapore,SN,AS,
+200,SH,SHN,Saint Helena,SH,AF,3370751.0
+201,SI,SVN,Slovenia,SI,EU,
+202,SJ,SJM,Svalbard and Jan Mayen,SV,EU,
+203,SK,SVK,Slovakia,LO,EU,
+204,SL,SLE,Sierra Leone,SL,AF,2403846.0
+205,SM,SMR,San Marino,SM,EU,
+206,SN,SEN,Senegal,SG,AF,
+207,SO,SOM,Somalia,SO,AF,
+208,SR,SUR,Suriname,NS,SA,3382998.0
+209,ST,STP,Sao Tome and Principe,TP,AF,2410758.0
+210,SV,SLV,El Salvador,ES,,
+211,SX,SXM,Sint Maarten,NN,,7609695.0
+212,SY,SYR,Syria,SY,AS,163843.0
+213,SZ,SWZ,Eswatini,WZ,AF,
+214,TC,TCA,Turks and Caicos Islands,TK,,3576916.0
+215,TD,TCD,Chad,CD,AF,2434508.0
+216,TF,ATF,French Southern Territories,FS,AN,1546748.0
+217,TG,TGO,Togo,TO,AF,2363686.0
+218,TH,THA,Thailand,TH,AS,
+219,TJ,TJK,Tajikistan,TI,AS,
+220,TK,TKL,Tokelau,TL,OC,4031074.0
+221,TL,TLS,Timor Leste,TT,OC,1966436.0
+222,TM,TKM,Turkmenistan,TX,AS,
+223,TN,TUN,Tunisia,TS,AF,
+224,TO,TON,Tonga,TN,OC,4032283.0
+225,TR,TUR,Turkey,TU,AS,
+226,TT,TTO,Trinidad and Tobago,TD,,3573591.0
+227,TV,TUV,Tuvalu,TV,OC,2110297.0
+228,TW,TWN,Taiwan,TW,AS,
+229,TZ,TZA,Tanzania,TZ,AF,149590.0
+230,UA,UKR,Ukraine,UP,EU,
+231,UG,UGA,Uganda,UG,AF,226074.0
+232,UM,UMI,United States Minor Outlying Islands,,OC,5854968.0
+233,US,USA,United States,US,,
+234,UY,URY,Uruguay,UY,SA,
+235,UZ,UZB,Uzbekistan,UZ,AS,
+236,VA,VAT,Vatican,VT,EU,
+237,VC,VCT,Saint Vincent and the Grenadines,VC,,3577815.0
+238,VE,VEN,Venezuela,VE,SA,
+239,VG,VGB,British Virgin Islands,VI,,3577718.0
+240,VI,VIR,U.S. Virgin Islands,VQ,,
+241,VN,VNM,Vietnam,VM,AS,
+242,VU,VUT,Vanuatu,NH,OC,2134431.0
+243,WF,WLF,Wallis and Futuna,WF,OC,
+244,WS,WSM,Samoa,WS,OC,4034894.0
+245,YE,YEM,Yemen,YM,AS,69543.0
+246,YT,MYT,Mayotte,MF,AF,
+247,ZA,ZAF,South Africa,SF,AF,
+248,ZM,ZMB,Zambia,ZA,AF,
+249,ZW,ZWE,Zimbabwe,ZI,AF,878675.0
+250,CS,SCG,Serbia and Montenegro,YI,EU,
+251,AN,ANT,Netherlands Antilles,NT,,8505032.0

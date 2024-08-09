@@ -427,8 +427,8 @@ def make_network_graph(data):
         g.add_edge(0, 2, color='black', label='collection')
         
         # Add edges
-        if institution_country := data['ods:physicalSpecimenCollection'].get('dwc:country'):
-            if data.get('ods:locality').get('name') == institution_country:
+        if institution_country := data['ods:physicalSpecimenCollection'].get('dwc:country'):            
+            if data.get('ods:locality') and data.get('ods:locality').get('name') == institution_country:
                 g.add_edge(2, 1, color='black')
             else:
                 g.add_node(3, label=institution_country, color='#f5c669', title="Country")

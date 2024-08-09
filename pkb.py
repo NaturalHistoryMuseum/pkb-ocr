@@ -335,7 +335,7 @@ def process_image(uploaded_file, neptune_client):
                             if harvard_index:
                                 collector['references'].append({
                                     "type": "harvard index",
-                                    "value": int(harvard_index)                   
+                                    "value": harvard_index
                                 })
 
                             orcid_id = row.get('orcid_b', None)
@@ -563,7 +563,7 @@ def remove_dot_zero(s):
 def df_row_get_first_value(row, columns):
     for column in columns:
         if is_valid(row.get(column, None)):
-            return row[column]
+            return remove_dot_zero(row[column])
 
 def main():
     """

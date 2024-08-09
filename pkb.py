@@ -176,11 +176,14 @@ def get_collectors(collector_name_str, neptune_client):
 
     st.error('HEY')
 
+    collector_name_str = 'Alfred Russel Wallace; Sandy Knapp'
+
     collector_names = split_and_clean_names(collector_name_str)
+
+    result_df = pd.DataFrame()  
+    
     for collector_name in collector_names:
-
-        collector_name = 'Alfred Russel Wallace'
-
+       
         if not is_valid(collector_name):
             continue
 
@@ -195,7 +198,8 @@ def get_collectors(collector_name_str, neptune_client):
 
         if df.empty: continue
 
-        result_df = pd.DataFrame()   
+        
+
         for index, row in df.iterrows():
             key = row['label']
             st.error(key)
@@ -204,9 +208,10 @@ def get_collectors(collector_name_str, neptune_client):
             result_df = pd.concat([result_df, temp_df], ignore_index=True)
             result_df = result_df.drop_duplicates(subset='collectorindex')
 
-        st.dataframe(result_df)
+    
+    st.dataframe(result_df)
 
-    return df
+    return result_df
 
 
 def process_image(uploaded_file, neptune_client):

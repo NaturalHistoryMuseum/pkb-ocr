@@ -174,8 +174,6 @@ def is_valid(param):
 
 def get_collectors(collector_name_str, neptune_client):
 
-    st.error('HEY')
-
     collector_name_str = 'Alfred Russel Wallace; Sandy Knapp'
 
     collector_names = split_and_clean_names(collector_name_str)
@@ -200,7 +198,6 @@ def get_collectors(collector_name_str, neptune_client):
 
         for index, row in df.iterrows():
             key = row['label']
-            st.error(key)
             query = f"g.V().has('collector', '{key}', TextP.containing('{collector_name}')).valueMap(true)"
             temp_df = wr.neptune.execute_gremlin(neptune_client, query)
             result_df = pd.concat([result_df, temp_df], ignore_index=True)
@@ -488,7 +485,11 @@ def get_institution(institution_code, institution_name):
         if not result.empty:
             return result.iloc[0].to_dict()        
         
-# def create_graph_network():
+def df_row_get_first_value(row, columns):
+    for column in columns:
+        if row.get(column, None):
+            return row[column]
+
 
 
 
@@ -528,9 +529,16 @@ def main():
         process_image(uploaded_file, neptune_client)  
 
     collector_name = 'Steven R. Hill'
-    get_collectors(collector_name, neptune_client)
+    collectors_df = get_collectors(collector_name, neptune_client)
+    if not collectors_df.empty:
+        for index, row in collectors_df.iterrows():
 
-    
+            # Check and print Author Abbreviation
+            author_abbrv = df_row_get_first_value(['authorabbrv_w', 'authorAbbrv_h'])
+            full_name = df_row_get_first_value(['fullname_w', 'fullname1_h', 'fullname2_h', 'fullname_b'])
+            
+            st.text("Author Abbreviation: " + author_abbrv)
+            st.text("FN: " + full_name)
 
     # data = {
     #     'collectorname':'Steven R. Hill',

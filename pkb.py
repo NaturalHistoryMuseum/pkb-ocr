@@ -36,7 +36,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 NEPTUNE_URL = os.getenv('NEPTUNE_URL')
 # Continue running even if neptune is missing
-CONTINUE_NO_NEPTUNE = os.getenv('CONTINUE_NO_NEPTUNE', 1)
+USE_NEPTUNE = os.getenv('USE_NEPTUNE', 1)
 
 DATA_DIR = Path('./data')
 
@@ -559,17 +559,10 @@ def main():
     # Create a session with the specified region
     session = boto3.Session(region_name=region_name)
 
-    try:
-        response = requests.get(f'https://{NEPTUNE_URL}/status', timeout=1)
-        response.raise_for_status()
-    except Exception as e:
-        if CONTINUE_NO_NEPTUNE:
-            neptune_client = None
-        else:
-            st.error("Sorry, the graph neural network is unavailable. Please try again later.")
-            return
-    else:
+    if USE_NEPTUNE:
         neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
+    else:
+        neptune_client = None
 
     # Upload image
     uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])

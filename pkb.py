@@ -489,17 +489,18 @@ def main():
     # Create a session with the specified region
     session = boto3.Session(region_name=region_name)
 
-    try:
-        response = requests.get(f'https://{NEPTUNE_URL}/status', timeout=1)
-        response.raise_for_status()
-    except Exception as e:
-        if CONTINUE_NO_NEPTUNE:
-            neptune_client = None
-        else:
-            st.error("Sorry, the graph neural network is unavailable. Please try again later.")
-            return
-    else:
-        neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
+    # try:
+    #     response = requests.get(f'https://{NEPTUNE_URL}/status', timeout=1)
+    #     response.raise_for_status()
+    # except Exception as e:
+    #     if CONTINUE_NO_NEPTUNE:
+    #         neptune_client = None
+    #     else:
+    #         st.error("Sorry, the graph neural network is unavailable. Please try again later.")
+    #         return
+    # else:
+    
+    neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
     
     # Upload image
     uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])

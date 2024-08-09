@@ -583,9 +583,9 @@ def main():
 
     st.title("Planetary Knowledge Base: AI Transcription")
 
-    st.markdown("<h2 style='font-size: 24px;'>Automating transcription of structured data from herbarium sheets using ChaptGPT and Graph Neural Network.</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size: 24px;'>Automatic extraction of structured data from herbarium sheets, using ChaptGPT and Graph Convolutional Neural Networks.</h2>", unsafe_allow_html=True)
 
-    st.caption("How it works: Herbarium Sheet Optical Character Recognition (OCR) Service Powered by AWS and OpenAI")
+    st.caption("Usage instructions: Upload an image of a herbarium sheet. AI will extract the data, creating a network graph representing the specimen and an Open Digital Specimen (OpenDS) JSON to download.") 
 
     # Create a session with the specified region
     session = boto3.Session(region_name=region_name)

@@ -174,10 +174,7 @@ def is_valid(param):
 
 def get_collectors(collector_name_str, neptune_client):
 
-    collector_name_str = 'Alfred Russel Wallace; Sandy Knapp'
-
     collector_names = split_and_clean_names(collector_name_str)
-
     result_df = pd.DataFrame()  
     
     for collector_name in collector_names:
@@ -302,8 +299,62 @@ def process_image(uploaded_file, neptune_client):
                     }
 
             if collector_name and neptune_client:
-                if aligned_collectors := get_collectors(collector_name, neptune_client):
-                    print(aligned_collectors)
+                collectors_df =  get_collectors(collector_name, neptune_client)
+                if not collectors_df.empty:
+
+                    data["ods:collectors"] = []
+
+                    for index, row in collectors_df.iterrows():
+
+                        # Check and print Author Abbreviation
+                        full_name = df_row_get_first_value(row, ['fullname_w', 'fullname1_h', 'fullname2_h', 'fullname_b'])
+                        dob = df_row_get_first_value(row, ['dateofbirth_w', 'dateofbirth_b'])
+                        if not full_name: continue
+
+                        collector = {
+                            'name': full_name,
+                            'references': []
+                        }
+
+                        if dob:
+                            collector['dob'] = dob
+
+                        author_abbrv = df_row_get_first_value(row, ['authorabbrv_w', 'authorAbbrv_h'])            
+                        if author_abbrv:
+                            collector['references'].append({
+                                "type": "TL2",
+                                "value":author_abbrv                   
+                            })
+                
+                        harvard_index = df_row_get_first_value(row, ['harvardindex_w_merged', 'harvardindex_w', 'harvardindex_w_wh', 'harvardindex'])
+                        if harvard_index:
+                            collector['references'].append({
+                                "type": "harvard index",
+                                "value": int(harvard_index)                   
+                            })
+
+                        orcid_id = row.get('orcid_b', None)
+                        if is_valid(orcid_id):
+                            collector['references'].append({
+                                "type": "ORCID",
+                                "value": f'https://orcid.org/{orcid_id}'
+                            })
+
+                        bionomia_id = df_row_get_first_value(row, ['bioid', 'bionomia_w'])
+                        if bionomia_id:
+                            collector['references'].append({
+                                "type": "bionomia",
+                                "value": f'https://bionomia.net/Q160627{bionomia_id}'
+                            })   
+
+                        wiki_qid = df_row_get_first_value(row, ['wikiid', 'wikidata_b'])
+                        if wiki_qid:
+                            collector['references'].append({
+                                "type": "wikidata",
+                                "value": f'http://www.wikidata.org/entity/{wiki_qid}'
+                            })     
+
+                        data["ods:collectors"].append(collector)              
 
             if institution_code or institution_name:
                 if aligned_institution := get_institution(institution_code, institution_name):
@@ -335,13 +386,9 @@ def process_image(uploaded_file, neptune_client):
                 with graph_path.open('r') as f:
                     source_code = f.read() 
                     components.html(source_code, height = 900,width=900)
-
-                st.json(data)
             
             with opends_tab:
-                st.json(data)            
-
-            
+                st.json(data)             
 
     with col1:
 
@@ -485,13 +532,19 @@ def get_institution(institution_code, institution_name):
         if not result.empty:
             return result.iloc[0].to_dict()        
         
+def remove_dot_zero(s):
+    try:
+        if s.endswith(".0"):
+            return s[:-2]
+    except AttributeError:
+        pass
+
+    return s
+
 def df_row_get_first_value(row, columns):
     for column in columns:
-        if row.get(column, None):
+        if is_valid(row.get(column, None)):
             return row[column]
-
-
-
 
 def main():
     """
@@ -506,21 +559,17 @@ def main():
     # Create a session with the specified region
     session = boto3.Session(region_name=region_name)
 
-    # try:
-    #     response = requests.get(f'https://{NEPTUNE_URL}/status', timeout=1)
-    #     response.raise_for_status()
-    # except Exception as e:
-    #     if CONTINUE_NO_NEPTUNE:
-    #         neptune_client = None
-    #     else:
-    #         st.error("Sorry, the graph neural network is unavailable. Please try again later.")
-    #         return
-    # else:
-    
-    neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
-    
-    st.text("Connecting to Neptune......")
-    st.text(neptune_client.status())
+    try:
+        response = requests.get(f'https://{NEPTUNE_URL}/status', timeout=1)
+        response.raise_for_status()
+    except Exception as e:
+        if CONTINUE_NO_NEPTUNE:
+            neptune_client = None
+        else:
+            st.error("Sorry, the graph neural network is unavailable. Please try again later.")
+            return
+    else:
+        neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
 
     # Upload image
     uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])
@@ -528,17 +577,9 @@ def main():
     if uploaded_file is not None:  
         process_image(uploaded_file, neptune_client)  
 
-    collector_name = 'Steven R. Hill'
-    collectors_df = get_collectors(collector_name, neptune_client)
-    if not collectors_df.empty:
-        for index, row in collectors_df.iterrows():
+    # collector_name = 'Steven R. Hill'
+    # collectors_df = get_collectors(collector_name, neptune_client)
 
-            # Check and print Author Abbreviation
-            author_abbrv = df_row_get_first_value(['authorabbrv_w', 'authorAbbrv_h'])
-            full_name = df_row_get_first_value(['fullname_w', 'fullname1_h', 'fullname2_h', 'fullname_b'])
-            
-            st.text("Author Abbreviation: " + author_abbrv)
-            st.text("FN: " + full_name)
 
     # data = {
     #     'collectorname':'Steven R. Hill',

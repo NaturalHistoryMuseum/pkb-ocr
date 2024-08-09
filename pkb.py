@@ -210,16 +210,10 @@ def get_collectors(collector_name_str, neptune_client):
     dedupe_on = ['wikiid', 'collectorindex', 'bionomia_w', 'harvardindex_w_merged', 'harvardindex_w', 'authorabbrv_w', 'XXXX']
 
     for d in dedupe_on:
-        result_df = result_df.drop_duplicates(subset=d)
+        if d in result_df.columns:
+            result_df = result_df.drop_duplicates(subset=d)
 
-
-    
     st.dataframe(result_df)
-    collectors = []
-    for index, row in df.iterrows():
-        collector = {}
-        if row.authorabbrv_w:
-            collector
 
     return result_df
 

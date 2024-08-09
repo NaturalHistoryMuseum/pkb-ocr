@@ -433,9 +433,6 @@ def make_network_graph(data):
             else:
                 g.add_node(3, label=institution_country, color='#f5c669', title="Country")
                 g.add_edge(2, 3, color='black', label='based in')
-
-        # g.add_edge(0, 1, color='black', label='locality')
-        g.add_edge(0, 1, color='black', label='locality')
             
     if data.get('ods:scientificName'):
         g.add_node(4, label=data['ods:scientificName']['dwc:scientificName'], color='#befa82', title=data['ods:scientificName']['dwc:taxonRank'].title())

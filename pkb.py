@@ -208,6 +208,13 @@ def get_collectors(collector_name_str, neptune_client):
             result_df = pd.concat([result_df, temp_df], ignore_index=True)
             result_df = result_df.drop_duplicates(subset='collectorindex')
 
+
+    dedupe_on = ['wikiid', 'collectorindex', 'bionomia_w', 'harvardindex_w_merged', 'harvardindex_w', 'authorabbrv_w']
+
+    for d in dedupe_on:
+        result_df = result_df.drop_duplicates(subset=d)
+
+
     
     st.dataframe(result_df)
 

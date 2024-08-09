@@ -1,0 +1,11 @@
+[Unit]
+Description=pkb
+
+[Service]
+ExecStart=/home/ubuntu/.venv/bin/python -m streamlit run /home/ubuntu/pkb-ocr
+WorkingDirectory=/home/ubuntu/pkb-ocr
+Restart=always
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

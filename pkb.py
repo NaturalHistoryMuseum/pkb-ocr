@@ -223,6 +223,7 @@ def process_image(uploaded_file, neptune_client):
 
     col1, col2 = st.columns([1, 3])
 
+
     with col1:
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
@@ -305,9 +306,7 @@ def process_image(uploaded_file, neptune_client):
 
                 if neptune_client:
                     collectors_df =  get_collectors(collector_name, neptune_client)
-                    if not collectors_df.empty:
-
-                        
+                    if not collectors_df.empty:                        
 
                         for index, row in collectors_df.iterrows():
 
@@ -410,40 +409,50 @@ def process_image(uploaded_file, neptune_client):
 
 
 def make_network_graph(data):
+    
+
+    specimen_colour = '#ffa600'
+    country_colour = '#ff6361'
+    taxon_colour = '#bc5090'
+    institution_colour = '#58508d'
+    person_colour = '#003f5c'
+    edge_colour = '#D3D3D3'
+    edge_text_colour = '#808080'
+
     g = Network(height='400px', width='80%', heading='')
-    g.add_node(0, label='Specimen', color='#f7b5ca')
+    g.add_node(0, label='Specimen', color=specimen_colour)
 
     specimen_id = data.get('ods:specimenID')
 
     # Plot the current specimen node
     if locality := data.get('ods:locality'):
-        g.add_node(1, label=locality['name'], color='#f5c669', title="Country")
+        g.add_node(1, label=locality['name'], color=country_colour, title="Country")
         # Add edges
-        g.add_edge(0, 1, color='black', label='locality')
+        g.add_edge(0, 1, color=edge_colour, label='locality', font={'color': edge_text_colour})
 
     # Plot the current specimen node
     if data.get('ods:physicalSpecimenCollection'):
-        g.add_node(2, label=data['ods:physicalSpecimenCollection']['dwc:institutionName'], color='#82b6fa', title="Institution")
-        g.add_edge(0, 2, color='black', label='collection')
+        g.add_node(2, label=data['ods:physicalSpecimenCollection']['dwc:institutionName'], color=institution_colour, title="Institution")
+        g.add_edge(0, 2, color=edge_colour, label='collection', font={'color': edge_text_colour})
         
         # Add edges
         if institution_country := data['ods:physicalSpecimenCollection'].get('dwc:country'):            
             if data.get('ods:locality') and data.get('ods:locality').get('name') == institution_country:
-                g.add_edge(2, 1, color='black')
+                g.add_edge(2, 1, color=edge_colour)
             else:
-                g.add_node(3, label=institution_country, color='#f5c669', title="Country")
-                g.add_edge(2, 3, color='black', label='based in')
+                g.add_node(3, label=institution_country, color=country_colour, title="Country")
+                g.add_edge(2, 3, color=edge_colour, label='based in', font={'color': edge_text_colour})
             
     if data.get('ods:scientificName'):
-        g.add_node(4, label=data['ods:scientificName']['dwc:scientificName'], color='#befa82', title=data['ods:scientificName']['dwc:taxonRank'].title())
-        g.add_edge(0, 4, color='black', label='determination')
+        g.add_node(4, label=data['ods:scientificName']['dwc:scientificName'], color=taxon_colour, title=data['ods:scientificName']['dwc:taxonRank'].title())
+        g.add_edge(0, 4, color=edge_colour, label='determination', font={'color': edge_text_colour})
 
     if data.get('ods:collectors'):
         n = len(g.nodes)
         for collector in data.get('ods:collectors'):
             n += 1
-            g.add_node(n, label=collector['name'], color='#befa82', title='Person')
-            g.add_edge(0, n, color='black', label='collected by')            
+            g.add_node(n, label=collector['name'], color=person_colour, title='Person')
+            g.add_edge(0, n, color=edge_colour, label='collected by', font={'color': edge_text_colour})            
 
     # Generate and show the network
     html_file_path = OUTPUT_DIR / f'{specimen_id}.graph.html'
@@ -561,11 +570,17 @@ def df_row_get_first_value(row, columns):
     for column in columns:
         if is_valid(row.get(column, None)):
             return remove_dot_zero(row[column])
+        
+if 'placeholder' not in st.session_state:
+    st.session_state.placeholder = None
 
 def main():
     """
     Main function to run the Streamlit app.
     """
+
+
+
     st.title("Planetary Knowledge Base: AI Transcription")
 
     st.markdown("<h2 style='font-size: 24px;'>Automating transcription of structured data from herbarium sheets using ChaptGPT and Graph Neural Network.</h2>", unsafe_allow_html=True)
@@ -574,8 +589,6 @@ def main():
 
     # Create a session with the specified region
     session = boto3.Session(region_name=region_name)
-
-    print(DEBUG)
 
     if USE_NEPTUNE:
         neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
@@ -587,56 +600,23 @@ def main():
             st.text("Not using Neptune......")
         neptune_client = None
 
+    
+    def load_new_file():
+        if st.session_state.placeholder:
+            st.session_state.placeholder.empty()
+
     # Upload image
-    uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"], on_change=load_new_file)
 
     if uploaded_file is not None:  
-        process_image(uploaded_file, neptune_client)  
+        placeholder =  st.empty()  
+        st.session_state.placeholder = placeholder
+        with placeholder.container():
+            process_image(uploaded_file, neptune_client)  
 
-    # collector_name = 'Steven R. Hill'
-    # collectors_df = get_collectors(collector_name, neptune_client)
-
-
-    # data = {
-    #     'collectorname':'Steven R. Hill',
-    #     'taxon':'Capsicum annuum L. var. longum',
-    #     'country_location':'South Carolina',
-    #     'ISO':'US',
-    #     'institutionname':'Harvard University',
-    #     'institutioncode':'HAR',
-    #     'year':'1989'
-    # }
-
-    # collector_name = data['collectorname']
-    # taxon_name = data['taxon']
-    # institution_code = data['institutioncode']
-    # institution_name = data['institutionname']
-    # country_iso = data['ISO']
-    # country_name = data['country_location']
-
-
-
-    # print(data)
-    # data[]
-
-# "ods:media": [
-#         {
-#             "@type": "ods:MediaObject",
-#             "ods:mediaContent": encoded_image,
-#             "ods:mediaEncodingFormat": "image/jpeg",
-#             "ods:mediaDescription": "High-resolution image of the specimen"
-#         }
-#     ],            
-
-#     print(data)
-
-            # print(aligned_institution)
-
-    # draw_graph()   
-
-        # print(data)
-
-  
+    with st.columns(2)[1]:
+        st.image("assets/logo.png", width=80)
+        
 
 if __name__ == "__main__":
     main()

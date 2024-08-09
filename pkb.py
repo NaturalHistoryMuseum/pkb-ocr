@@ -38,6 +38,7 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 NEPTUNE_URL = os.getenv('NEPTUNE_URL')
 # Continue running even if neptune is missing
 USE_NEPTUNE = bool(strtobool(os.getenv('USE_NEPTUNE', '1')))
+DEBUG = bool(strtobool(os.getenv('DEBUG', '0')))
 
 
 DATA_DIR = Path('./data')
@@ -577,11 +578,16 @@ def main():
     # Create a session with the specified region
     session = boto3.Session(region_name=region_name)
 
+    print(DEBUG)
+
     if USE_NEPTUNE:
         neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
-        st.text("Connecting to Neptune......")
-        st.text(neptune_client.status())        
+        if DEBUG:
+            st.text("Connecting to Neptune......")
+            st.text(neptune_client.status())        
     else:
+        if DEBUG:
+            st.text("Not using Neptune......")
         neptune_client = None
 
     # Upload image

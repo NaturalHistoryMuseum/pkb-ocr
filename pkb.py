@@ -179,7 +179,7 @@ def get_collectors(collector_name_str, neptune_client):
     collector_names = split_and_clean_names(collector_name_str)
     for collector_name in collector_names:
 
-        st.error(collector_name)
+        collector_name = 'S. Knapp'
 
         if not is_valid(collector_name):
             continue

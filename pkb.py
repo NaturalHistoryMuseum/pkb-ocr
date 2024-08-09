@@ -52,6 +52,9 @@ OPEN_AI_API_KEY = os.environ.get('OPEN_AI_API_KEY')
 OpenAI.api_key = OPEN_AI_API_KEY
 gpt_client = OpenAI(api_key=OpenAI.api_key) #Best practice needs OPENAI_API_KEY environment variable
 
+# Raise an exception of Neptune is missing
+CONTINUE_NO_NEPTUNE = False
+
 # Set the page layout to wide mode
 st.set_page_config(layout="wide")
 
@@ -254,6 +257,11 @@ def process_image(uploaded_file, neptune_client):
                 "ods:basisOfRecord": "PreservedSpecimen",
                 "ods:license": "CC-BY 4.0",
             }
+
+            if row.year:
+              data['ods:eventDate'] = row.year
+              data['ods:collectingYear'] = row.year
+
             if country_iso or country_name:
                 if aligned_country := get_country(country_iso, country_name):
                     data["ods:locality"] = {
@@ -469,17 +477,21 @@ def main():
 
     st.caption("How it works: Herbarium Sheet Optical Character Recognition (OCR) Service Powered by AWS and OpenAI")
 
+    # Create a session with the specified region
+    session = boto3.Session(region_name=region_name)
+
     try:
         response = requests.get(f'https://{url}/status', timeout=1)
         response.raise_for_status()
     except Exception as e:
-        st.error("Sorry, the graph neural network is unavailable. Please try again later.")
-        return
+        if CONTINUE_NO_NEPTUNE:
+            neptune_client = None
+        else:
+            st.error("Sorry, the graph neural network is unavailable. Please try again later.")
+            return
+    else:
+        neptune_client = wr.neptune.connect(url, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
     
-    # Create a session with the specified region
-    session = boto3.Session(region_name=region_name)
-    neptune_client = wr.neptune.connect(url, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
-
     # Upload image
     uploaded_file = st.file_uploader("Upload an herbarium image...", type=["jpg", "jpeg", "png"])
 

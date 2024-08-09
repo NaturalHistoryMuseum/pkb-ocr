@@ -207,8 +207,6 @@ def get_collectors(collector_name_str, neptune_client):
         if d in result_df.columns:
             result_df = result_df.drop_duplicates(subset=d)
 
-    st.dataframe(result_df)
-
     return result_df
 
 
@@ -298,63 +296,74 @@ def process_image(uploaded_file, neptune_client):
                         "dwc:scientificNameAuthorship": aligned_taxon['authorship']
                     }
 
-            if collector_name and neptune_client:
-                collectors_df =  get_collectors(collector_name, neptune_client)
-                if not collectors_df.empty:
+            if collector_name:
 
-                    data["ods:collectors"] = []
+                data["ods:collectors"] = []
 
-                    for index, row in collectors_df.iterrows():
+                if neptune_client:
+                    collectors_df =  get_collectors(collector_name, neptune_client)
+                    if not collectors_df.empty:
 
-                        # Check and print Author Abbreviation
-                        full_name = df_row_get_first_value(row, ['fullname_w', 'fullname1_h', 'fullname2_h', 'fullname_b'])
-                        dob = df_row_get_first_value(row, ['dateofbirth_w', 'dateofbirth_b'])
-                        if not full_name: continue
+                        
 
-                        collector = {
-                            'name': full_name,
-                            'references': []
-                        }
+                        for index, row in collectors_df.iterrows():
 
-                        if dob:
-                            collector['dob'] = dob
+                            # Check and print Author Abbreviation
+                            full_name = df_row_get_first_value(row, ['fullname_w', 'fullname1_h', 'fullname2_h', 'fullname_b'])
+                            dob = df_row_get_first_value(row, ['dateofbirth_w', 'dateofbirth_b'])
+                            if not full_name: continue
 
-                        author_abbrv = df_row_get_first_value(row, ['authorabbrv_w', 'authorAbbrv_h'])            
-                        if author_abbrv:
-                            collector['references'].append({
-                                "type": "TL2",
-                                "value":author_abbrv                   
-                            })
-                
-                        harvard_index = df_row_get_first_value(row, ['harvardindex_w_merged', 'harvardindex_w', 'harvardindex_w_wh', 'harvardindex'])
-                        if harvard_index:
-                            collector['references'].append({
-                                "type": "harvard index",
-                                "value": int(harvard_index)                   
-                            })
+                            collector = {
+                                'name': full_name,
+                                'references': []
+                            }
 
-                        orcid_id = row.get('orcid_b', None)
-                        if is_valid(orcid_id):
-                            collector['references'].append({
-                                "type": "ORCID",
-                                "value": f'https://orcid.org/{orcid_id}'
-                            })
+                            if dob:
+                                collector['dob'] = dob
 
-                        bionomia_id = df_row_get_first_value(row, ['bioid', 'bionomia_w'])
-                        if bionomia_id:
-                            collector['references'].append({
-                                "type": "bionomia",
-                                "value": f'https://bionomia.net/Q160627{bionomia_id}'
-                            })   
+                            author_abbrv = df_row_get_first_value(row, ['authorabbrv_w', 'authorAbbrv_h'])            
+                            if author_abbrv:
+                                collector['references'].append({
+                                    "type": "TL2",
+                                    "value":author_abbrv                   
+                                })
+                    
+                            harvard_index = df_row_get_first_value(row, ['harvardindex_w_merged', 'harvardindex_w', 'harvardindex_w_wh', 'harvardindex'])
+                            if harvard_index:
+                                collector['references'].append({
+                                    "type": "harvard index",
+                                    "value": int(harvard_index)                   
+                                })
 
-                        wiki_qid = df_row_get_first_value(row, ['wikiid', 'wikidata_b'])
-                        if wiki_qid:
-                            collector['references'].append({
-                                "type": "wikidata",
-                                "value": f'http://www.wikidata.org/entity/{wiki_qid}'
-                            })     
+                            orcid_id = row.get('orcid_b', None)
+                            if is_valid(orcid_id):
+                                collector['references'].append({
+                                    "type": "ORCID",
+                                    "value": f'https://orcid.org/{orcid_id}'
+                                })
 
-                        data["ods:collectors"].append(collector)              
+                            bionomia_id = df_row_get_first_value(row, ['bioid', 'bionomia_w'])
+                            if bionomia_id:
+                                collector['references'].append({
+                                    "type": "bionomia",
+                                    "value": f'https://bionomia.net/Q160627{bionomia_id}'
+                                })   
+
+                            wiki_qid = df_row_get_first_value(row, ['wikiid', 'wikidata_b'])
+                            if wiki_qid:
+                                collector['references'].append({
+                                    "type": "wikidata",
+                                    "value": f'http://www.wikidata.org/entity/{wiki_qid}'
+                                })     
+
+                            data["ods:collectors"].append(collector)      
+
+                if not data["ods:collectors"]:
+                    collector_names = split_and_clean_names(collector_name)       
+                    for collector_name in collector_names:
+                        data["ods:collectors"].append({
+                            'name': collector_name
+                        })                           
 
             if institution_code or institution_name:
                 if aligned_institution := get_institution(institution_code, institution_name):

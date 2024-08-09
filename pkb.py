@@ -561,6 +561,8 @@ def main():
 
     if USE_NEPTUNE:
         neptune_client = wr.neptune.connect(NEPTUNE_URL, neptune_port, iam_enabled=iam_enabled, boto3_session=session)
+        st.text("Connecting to Neptune......")
+        st.text(neptune_client.status())        
     else:
         neptune_client = None
 

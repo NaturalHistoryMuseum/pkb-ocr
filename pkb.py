@@ -29,6 +29,7 @@ import time
 from pygbif import species
 from fuzzywuzzy import process
 from dotenv import load_dotenv
+from distutils.util import strtobool
 
 
 load_dotenv()
@@ -36,7 +37,8 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 NEPTUNE_URL = os.getenv('NEPTUNE_URL')
 # Continue running even if neptune is missing
-USE_NEPTUNE = os.getenv('USE_NEPTUNE', 1)
+USE_NEPTUNE = bool(strtobool(os.getenv('USE_NEPTUNE', '1')))
+
 
 DATA_DIR = Path('./data')
 
@@ -437,6 +439,13 @@ def make_network_graph(data):
     if data.get('ods:scientificName'):
         g.add_node(4, label=data['ods:scientificName']['dwc:scientificName'], color='#befa82', title=data['ods:scientificName']['dwc:taxonRank'].title())
         g.add_edge(0, 4, color='black', label='determination')
+
+    if data.get('ods:collectors'):
+        n = len(g.nodes)
+        for collector in data.get('ods:collectors'):
+            n += 1
+            g.add_node(n, label=collector['name'], color='#befa82', title='Person')
+            g.add_edge(0, n, color='black', label='collected by')            
 
     # Generate and show the network
     html_file_path = OUTPUT_DIR / f'{specimen_id}.graph.html'
